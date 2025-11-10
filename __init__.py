@@ -6,6 +6,8 @@
 # 2. 或者在现有子目录中修改或新建代码
 # 3. 所有节点必须在此文件中集中引用和注册
 # 4. 遵循"做一件事并做好"的UNIX哲学，确保模块高内聚、低耦合
+# 5. 所有的功能性子分类都需要测试数据生成节点和example_workflow
+# 6. 所有节点的名字后面都需要有🐱
 
 import os
 import sys
@@ -18,7 +20,9 @@ modules = [
     "DataTypes",
     "DLBasic", 
     "DLCompute",
-    "Visualize"
+    "Visualize",
+    "NLP_Pretrain",
+    "ComputerVision"  # 新增计算机视觉模块
 ]
 
 # 添加模块路径到sys.path
@@ -79,23 +83,23 @@ try:
     
     NODE_DISPLAY_NAME_MAPPINGS.update({
         # DataTypes Creation节点
-        "TensorCreator": "Tensor Creator",
-        "RandomTensorCreator": "Random Tensor Creator",
-        "SpecialTensorCreator": "Special Tensor Creator",
-        "TensorReshaper": "Tensor Reshaper",
-        "TensorConverter": "Tensor Converter",
+        "TensorCreator": "Tensor Creator 🐱",
+        "RandomTensorCreator": "Random Tensor Creator 🐱",
+        "SpecialTensorCreator": "Special Tensor Creator 🐱",
+        "TensorReshaper": "Tensor Reshaper 🐱",
+        "TensorConverter": "Tensor Converter 🐱",
         
         # DataTypes节点
-        "ImageToTensor": "Image to Tensor",
-        "TensorToImage": "Tensor to Image",
-        "ModelToTensor": "Model to Tensor",
-        "TensorToModel": "Tensor to Model",
-        "ClipToTensor": "CLIP to Tensor",
-        "TensorToClip": "Tensor to CLIP",
-        "VaeToTensor": "VAE to Tensor",
-        "TensorToVae": "Tensor to VAE",
-        "LoadTensor": "Load Tensor",
-        "SaveTensor": "Save Tensor",
+        "ImageToTensor": "Image to Tensor 🐱",
+        "TensorToImage": "Tensor to Image 🐱",
+        "ModelToTensor": "Model to Tensor 🐱",
+        "TensorToModel": "Tensor to Model 🐱",
+        "ClipToTensor": "CLIP to Tensor 🐱",
+        "TensorToClip": "Tensor to CLIP 🐱",
+        "VaeToTensor": "VAE to Tensor 🐱",
+        "TensorToVae": "Tensor to VAE 🐱",
+        "LoadTensor": "Load Tensor 🐱",
+        "SaveTensor": "Save Tensor 🐱",
     })
     
 except ImportError as e:
@@ -163,32 +167,32 @@ try:
     })
     
     NODE_DISPLAY_NAME_MAPPINGS.update({
-        "TensorAdd": "Tensor Add",
-        "TensorSubtract": "Tensor Subtract",
-        "TensorMultiply": "Tensor Multiply",
-        "TensorDivide": "Tensor Divide",
-        "TensorPower": "Tensor Power",
-        "TensorSqrt": "Tensor Sqrt",
-        "TensorTranspose": "Tensor Transpose",
-        "TensorReshape_DLBasic": "Tensor Reshape",
-        "TensorSqueeze": "Tensor Squeeze",
-        "TensorUnsqueeze": "Tensor Unsqueeze",
-        "TensorConcatenate": "Tensor Concatenate",
-        "TensorSum": "Tensor Sum",
-        "TensorMean": "Tensor Mean",
-        "TensorMax": "Tensor Max",
-        "TensorMin": "Tensor Min",
-        "TensorAbs": "Tensor Abs",
-        "TensorSin": "Tensor Sin",
-        "TensorCos": "Tensor Cos",
-        "TensorExp": "Tensor Exp",
-        "TensorLog": "Tensor Log",
-        "TensorReLU": "Tensor ReLU",
-        "TensorLeakyReLU": "Tensor LeakyReLU",
-        "TensorSigmoid": "Tensor Sigmoid",
-        "TensorTanh": "Tensor Tanh",
-        "TensorSoftmax": "Tensor Softmax",
-        "TensorELU": "Tensor ELU",
+        "TensorAdd": "Tensor Add 🐱",
+        "TensorSubtract": "Tensor Subtract 🐱",
+        "TensorMultiply": "Tensor Multiply 🐱",
+        "TensorDivide": "Tensor Divide 🐱",
+        "TensorPower": "Tensor Power 🐱",
+        "TensorSqrt": "Tensor Sqrt 🐱",
+        "TensorTranspose": "Tensor Transpose 🐱",
+        "TensorReshape_DLBasic": "Tensor Reshape 🐱",
+        "TensorSqueeze": "Tensor Squeeze 🐱",
+        "TensorUnsqueeze": "Tensor Unsqueeze 🐱",
+        "TensorConcatenate": "Tensor Concatenate 🐱",
+        "TensorSum": "Tensor Sum 🐱",
+        "TensorMean": "Tensor Mean 🐱",
+        "TensorMax": "Tensor Max 🐱",
+        "TensorMin": "Tensor Min 🐱",
+        "TensorAbs": "Tensor Abs 🐱",
+        "TensorSin": "Tensor Sin 🐱",
+        "TensorCos": "Tensor Cos 🐱",
+        "TensorExp": "Tensor Exp 🐱",
+        "TensorLog": "Tensor Log 🐱",
+        "TensorReLU": "Tensor ReLU 🐱",
+        "TensorLeakyReLU": "Tensor LeakyReLU 🐱",
+        "TensorSigmoid": "Tensor Sigmoid 🐱",
+        "TensorTanh": "Tensor Tanh 🐱",
+        "TensorSoftmax": "Tensor Softmax 🐱",
+        "TensorELU": "Tensor ELU 🐱",
     })
     
 except ImportError as e:
@@ -212,6 +216,11 @@ try:
         TensorUpdateWeights
     )
     
+    # 导入DLCompute测试数据生成器
+    from .DLCompute.test_data_generator import (
+        DLComputeTestDataGenerator
+    )
+    
     # 更新节点映射
     NODE_CLASS_MAPPINGS.update({
         "TensorDataLoader": TensorDataLoader,
@@ -227,22 +236,24 @@ try:
         "TensorForwardPass": TensorForwardPass,
         "TensorBackwardPass": TensorBackwardPass,
         "TensorUpdateWeights": TensorUpdateWeights,
+        "DLComputeTestDataGenerator": DLComputeTestDataGenerator,
     })
     
     NODE_DISPLAY_NAME_MAPPINGS.update({
-        "TensorDataLoader": "Tensor Data Loader",
-        "TensorNormalize": "Tensor Normalize",
-        "TensorAugment": "Tensor Augment",
-        "TensorLinearLayer": "Tensor Linear Layer",
-        "TensorConv2DLayer": "Tensor Conv2D Layer",
-        "TensorActivation": "Tensor Activation",
-        "TensorMSELoss": "Tensor MSE Loss",
-        "TensorCrossEntropyLoss": "Tensor Cross Entropy Loss",
-        "TensorSGDOptimizer": "Tensor SGD Optimizer",
-        "TensorAdamOptimizer": "Tensor Adam Optimizer",
-        "TensorForwardPass": "Tensor Forward Pass",
-        "TensorBackwardPass": "Tensor Backward Pass",
-        "TensorUpdateWeights": "Tensor Update Weights",
+        "TensorDataLoader": "Tensor Data Loader 🐱",
+        "TensorNormalize": "Tensor Normalize 🐱",
+        "TensorAugment": "Tensor Augment 🐱",
+        "TensorLinearLayer": "Tensor Linear Layer 🐱",
+        "TensorConv2DLayer": "Tensor Conv2D Layer 🐱",
+        "TensorActivation": "Tensor Activation 🐱",
+        "TensorMSELoss": "Tensor MSE Loss 🐱",
+        "TensorCrossEntropyLoss": "Tensor Cross Entropy Loss 🐱",
+        "TensorSGDOptimizer": "Tensor SGD Optimizer 🐱",
+        "TensorAdamOptimizer": "Tensor Adam Optimizer 🐱",
+        "TensorForwardPass": "Tensor Forward Pass 🐱",
+        "TensorBackwardPass": "Tensor Backward Pass 🐱",
+        "TensorUpdateWeights": "Tensor Update Weights 🐱",
+        "DLComputeTestDataGenerator": "DLCompute Test Data Generator 🐱",
     })
     
 except ImportError as e:
@@ -268,15 +279,255 @@ try:
     })
     
     NODE_DISPLAY_NAME_MAPPINGS.update({
-        "TensorToImageVisualizer": "Tensor to Image Visualizer",
-        "TensorHeatmapVisualizer": "Tensor Heatmap Visualizer",
-        "TensorShapeVisualizer": "Tensor Shape Visualizer",
-        "TensorLineChartVisualizer": "Tensor Line Chart Visualizer",
-        "TensorStatisticsVisualizer": "Tensor Statistics Visualizer",
+        "TensorToImageVisualizer": "Tensor to Image Visualizer 🐱",
+        "TensorHeatmapVisualizer": "Tensor Heatmap Visualizer 🐱",
+        "TensorShapeVisualizer": "Tensor Shape Visualizer 🐱",
+        "TensorLineChartVisualizer": "Tensor Line Chart Visualizer 🐱",
+        "TensorStatisticsVisualizer": "Tensor Statistics Visualizer 🐱",
     })
     
 except ImportError as e:
     print(f"Error importing Visualize nodes: {e}")
+
+# 新增NLP预训练模块
+try:
+    # 导入NLP预训练模块 - 词嵌入相关节点
+    from .NLP_Pretrain.word_embeddings import (
+        Word2VecSelfSupervised,
+        SkipGramModel,
+        CBOWModel,
+        SubsamplingNLP
+    )
+    
+    # 导入NLP预训练模块 - 近似训练相关节点
+    from .NLP_Pretrain.approximate_training import (
+        NegativeSamplingNLP,
+        HierarchicalSoftmaxNLP
+    )
+    
+    # 导入NLP预训练模块 - GloVe相关节点
+    from .NLP_Pretrain.glove import (
+        GloVeModel
+    )
+    
+    # 导入NLP预训练模块 - FastText相关节点
+    from .NLP_Pretrain.fasttext import (
+        FastTextModel
+    )
+    
+    # 导入NLP预训练模块 - BERT相关节点
+    from .NLP_Pretrain.bert import (
+        BERTModel,
+        BERTMaskedLanguageModel
+    )
+    
+    # 导入NLP预训练模块 - 测试数据生成器
+    from .NLP_Pretrain.test_data_generator import (
+        NLPTestDataGenerator
+    )
+    
+    # 更新节点映射
+    NODE_CLASS_MAPPINGS.update({
+        # 词嵌入相关节点
+        "Word2VecSelfSupervised": Word2VecSelfSupervised,
+        "SkipGramModel": SkipGramModel,
+        "CBOWModel": CBOWModel,
+        "SubsamplingNLP": SubsamplingNLP,
+        
+        # 近似训练相关节点
+        "NegativeSamplingNLP": NegativeSamplingNLP,
+        "HierarchicalSoftmaxNLP": HierarchicalSoftmaxNLP,
+        
+        # GloVe相关节点
+        "GloVeModel": GloVeModel,
+        
+        # FastText相关节点
+        "FastTextModel": FastTextModel,
+        
+        # BERT相关节点
+        "BERTModel": BERTModel,
+        "BERTMaskedLanguageModel": BERTMaskedLanguageModel,
+        
+        # 测试数据生成器
+        "NLPTestDataGenerator": NLPTestDataGenerator,
+    })
+    
+    NODE_DISPLAY_NAME_MAPPINGS.update({
+        # 词嵌入相关节点
+        "Word2VecSelfSupervised": "Word2Vec Self-Supervised 🐱",
+        "SkipGramModel": "Skip-Gram Model 🐱",
+        "CBOWModel": "CBOW Model 🐱",
+        "SubsamplingNLP": "Subsampling NLP 🐱",
+        
+        # 近似训练相关节点
+        "NegativeSamplingNLP": "Negative Sampling NLP 🐱",
+        "HierarchicalSoftmaxNLP": "Hierarchical Softmax NLP 🐱",
+        
+        # GloVe相关节点
+        "GloVeModel": "GloVe Model 🐱",
+        
+        # FastText相关节点
+        "FastTextModel": "FastText Model 🐱",
+        
+        # BERT相关节点
+        "BERTModel": "BERT Model 🐱",
+        "BERTMaskedLanguageModel": "BERT Masked Language Model 🐱",
+        
+        # 测试数据生成器
+        "NLPTestDataGenerator": "NLP Test Data Generator 🐱",
+    })
+    
+except ImportError as e:
+    print(f"Error importing NLP_Pretrain nodes: {e}")
+
+# 新增计算机视觉模块
+try:
+    # 导入计算机视觉模块 - 图像增广相关节点
+    from .ComputerVision.image_augmentation import (
+        ImageAugmentationNode,
+        BatchImageAugmentationNode
+    )
+    
+    # 导入计算机视觉模块 - 微调相关节点
+    from .ComputerVision.finetuning import (
+        FinetuningNode
+    )
+    
+    # 导入计算机视觉模块 - 边界框相关节点
+    from .ComputerVision.bounding_boxes import (
+        BoundingBoxNode,
+        BoundingBoxMatchingNode
+    )
+    
+    # 导入计算机视觉模块 - 锚框相关节点
+    from .ComputerVision.anchor_boxes import (
+        AnchorBoxNode
+    )
+    
+    # 导入计算机视觉模块 - IoU相关节点
+    from .ComputerVision.iou import (
+        IoUNode
+    )
+    
+    # 导入计算机视觉模块 - 单发多框检测相关节点
+    from .ComputerVision.single_shot_multibox import (
+        SingleShotMultiboxNode
+    )
+    
+    # 导入计算机视觉模块 - R-CNN系列相关节点
+    from .ComputerVision.rcnn_series import (
+        RCNNModelNode
+    )
+    
+    # 导入计算机视觉模块 - 语义分割相关节点
+    from .ComputerVision.semantic_segmentation import (
+        SemanticSegmentationNode,
+        InstanceSegmentationNode
+    )
+    
+    # 导入计算机视觉模块 - 转置卷积相关节点
+    from .ComputerVision.transposed_convolution import (
+        TransposedConv2DNode,
+        MultiScaleTransposedConvNode
+    )
+    
+    # 导入计算机视觉模块 - 全卷积网络相关节点
+    from .ComputerVision.fully_convolutional_network import (
+        FCNNode,
+        EncoderDecoderNode
+    )
+    
+    # 导入计算机视觉模块 - 风格迁移相关节点
+    from .ComputerVision.style_transfer import (
+        StyleTransferNode,
+        FastStyleTransferNode
+    )
+    
+    # 更新节点映射
+    NODE_CLASS_MAPPINGS.update({
+        # 图像增广相关节点
+        "ImageAugmentationNode": ImageAugmentationNode,
+        "BatchImageAugmentationNode": BatchImageAugmentationNode,
+        
+        # 微调相关节点
+        "FinetuningNode": FinetuningNode,
+        
+        # 边界框相关节点
+        "BoundingBoxNode": BoundingBoxNode,
+        "BoundingBoxMatchingNode": BoundingBoxMatchingNode,
+        
+        # 锚框相关节点
+        "AnchorBoxNode": AnchorBoxNode,
+        
+        # IoU相关节点
+        "IoUNode": IoUNode,
+        
+        # 单发多框检测相关节点
+        "SingleShotMultiboxNode": SingleShotMultiboxNode,
+        
+        # R-CNN系列相关节点
+        "RCNNModelNode": RCNNModelNode,
+        
+        # 语义分割相关节点
+        "SemanticSegmentationNode": SemanticSegmentationNode,
+        "InstanceSegmentationNode": InstanceSegmentationNode,
+        
+        # 转置卷积相关节点
+        "TransposedConv2DNode": TransposedConv2DNode,
+        "MultiScaleTransposedConvNode": MultiScaleTransposedConvNode,
+        
+        # 全卷积网络相关节点
+        "FCNNode": FCNNode,
+        "EncoderDecoderNode": EncoderDecoderNode,
+        
+        # 风格迁移相关节点
+        "StyleTransferNode": StyleTransferNode,
+        "FastStyleTransferNode": FastStyleTransferNode,
+    })
+    
+    NODE_DISPLAY_NAME_MAPPINGS.update({
+        # 图像增广相关节点
+        "ImageAugmentationNode": "Image Augmentation 🐱",
+        "BatchImageAugmentationNode": "Batch Image Augmentation 🐱",
+        
+        # 微调相关节点
+        "FinetuningNode": "Finetuning 🐱",
+        
+        # 边界框相关节点
+        "BoundingBoxNode": "Bounding Box 🐱",
+        "BoundingBoxMatchingNode": "Bounding Box Matching 🐱",
+        
+        # 锚框相关节点
+        "AnchorBoxNode": "Anchor Box 🐱",
+        
+        # IoU相关节点
+        "IoUNode": "IoU 🐱",
+        
+        # 单发多框检测相关节点
+        "SingleShotMultiboxNode": "Single Shot Multibox 🐱",
+        
+        # R-CNN系列相关节点
+        "RCNNModelNode": "R-CNN Model 🐱",
+        
+        # 语义分割相关节点
+        "SemanticSegmentationNode": "Semantic Segmentation 🐱",
+        "InstanceSegmentationNode": "Instance Segmentation 🐱",
+        
+        # 转置卷积相关节点
+        "TransposedConv2DNode": "Transposed Conv 2D 🐱",
+        "MultiScaleTransposedConvNode": "Multi-Scale Transposed Conv 🐱",
+        
+        # 全卷积网络相关节点
+        "FCNNode": "Fully Convolutional Network 🐱",
+        "EncoderDecoderNode": "Encoder-Decoder Network 🐱",
+        
+        # 风格迁移相关节点
+        "StyleTransferNode": "Neural Style Transfer 🐱",
+        "FastStyleTransferNode": "Fast Style Transfer 🐱",
+    })
+    
+except ImportError as e:
+    print(f"Error importing ComputerVision nodes: {e}")
 
 # 定义要导出的类
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
