@@ -49,6 +49,7 @@ class TensorToImageVisualizer:
                 # 转换为0-1范围
                 data = torch.clamp(tensor, 0, 1)
             else:
+                # TODO: 支持多通道可视化选择和比较
                 # 多通道，取第一个通道
                 data = tensor[:, :, 0]
         elif tensor.dim() == 2:

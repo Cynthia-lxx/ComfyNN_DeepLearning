@@ -8,7 +8,14 @@
 # 4. 遵循"做一件事并做好"的UNIX哲学，确保模块高内聚、低耦合
 # 5. 所有的功能性子分类都需要测试数据生成节点和example_workflow
 # 6. 所有节点的名字后面都需要有🐱
+# 7. 编写任何插件代码，都应该先阅读ComfyUI的源代码以及已经测试稳定的插件代码作为参考
 
+"""
+2025/11/10
+经测试，启动时插件出现以下错误：
+Error importing ComputerVision nodes: cannot import name 'NODE_CLASS_MAPPINGS' from 'F:\\Dev\\ComfyNN_v0\\custom_nodes\\ComfyNN_DeepLearning-main.ComputerVision.image_augmentation' (F:\Dev\ComfyNN_v0\custom_nodes\ComfyNN_DeepLearning-main\ComputerVision\image_augmentation.py)
+TODO: 修复ComputerVision的节点定义格式
+"""
 import os
 import sys
 

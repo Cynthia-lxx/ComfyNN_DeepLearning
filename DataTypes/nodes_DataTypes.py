@@ -76,6 +76,7 @@ class ModelToTensor:
     DESCRIPTION = "将MODEL转换为TENSOR"
 
     def convert(self, model):
+        # TODO: 实现真实的MODEL到Tensor转换
         # MODEL对象不能直接转换为Tensor，这里我们返回一个占位符
         # 实际应用中，可能需要访问模型的特定权重
         return (torch.tensor([0.0]),)  # 占位符
@@ -100,6 +101,7 @@ class TensorToModel:
     DESCRIPTION = "将TENSOR转换为MODEL"
 
     def convert(self, tensor, reference_model):
+        # TODO: 实现真实的Tensor到MODEL转换
         # TENSOR不能直接转换为MODEL，这里我们返回参考模型
         # 实际应用中，可能需要用tensor更新模型权重
         return (reference_model,)
@@ -123,6 +125,7 @@ class ClipToTensor:
     DESCRIPTION = "将CLIP转换为TENSOR"
 
     def convert(self, clip):
+        # TODO: 实现真实的CLIP到Tensor转换
         # CLIP对象不能直接转换为Tensor，这里我们返回一个占位符
         return (torch.tensor([0.0]),)  # 占位符
 
@@ -146,6 +149,7 @@ class TensorToClip:
     DESCRIPTION = "将TENSOR转换为CLIP"
 
     def convert(self, tensor, reference_clip):
+        # TODO: 实现真实的Tensor到CLIP转换
         # TENSOR不能直接转换为CLIP，这里我们返回参考CLIP
         return (reference_clip,)
 
@@ -168,6 +172,7 @@ class VaeToTensor:
     DESCRIPTION = "将VAE转换为TENSOR"
 
     def convert(self, vae):
+        # TODO: 实现真实的VAE到Tensor转换
         # VAE对象不能直接转换为Tensor，这里我们返回一个占位符
         return (torch.tensor([0.0]),)  # 占位符
 
@@ -191,6 +196,7 @@ class TensorToVae:
     DESCRIPTION = "将TENSOR转换为VAE"
 
     def convert(self, tensor, reference_vae):
+        # TODO: 实现真实的Tensor到VAE转换
         # TENSOR不能直接转换为VAE，这里我们返回参考VAE
         return (reference_vae,)
 
@@ -305,6 +311,7 @@ class LoadTensor:
             else:
                 return torch.zeros(1)
         except:
+            # TODO: 改进JSON到张量的转换错误处理
             return torch.zeros(1)
 
     def _text_to_tensor(self, content):
@@ -323,6 +330,7 @@ class LoadTensor:
                         pass
             return torch.tensor(values) if values else torch.zeros(1)
         except:
+            # TODO: 改进文本到张量的转换错误处理
             return torch.zeros(1)
 
     def _csv_to_tensor(self, data):
@@ -341,6 +349,7 @@ class LoadTensor:
                     matrix.append(row_values)
             return torch.tensor(matrix, dtype=torch.float32) if matrix else torch.zeros(1)
         except:
+            # TODO: 改进CSV到张量的转换错误处理
             return torch.zeros(1)
 
     @classmethod

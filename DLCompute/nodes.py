@@ -44,6 +44,7 @@ class TensorDataLoader:
         if shuffle:
             random.shuffle(indices)
         
+        # TODO: 实现完整的数据批处理迭代器
         # 简化处理：这里我们只返回第一个批次
         batch_indices = indices[:batch_size]
         batch_data = data[batch_indices]
@@ -170,6 +171,7 @@ class TensorLinearLayer:
             # 重塑输入张量
             input_tensor = input_tensor.view(-1, in_features)
         
+        # TODO: 实现真实的线性层，当前仅为简化版本
         # 执行线性变换
         if bias_tensor is not None:
             output = torch.matmul(input_tensor, weight.t()) + bias_tensor
@@ -214,6 +216,7 @@ class TensorConv2DLayer:
         weight = torch.randn(out_channels, in_channels, kernel_size, kernel_size) * np.sqrt(2.0 / (in_channels * kernel_size * kernel_size))
         bias = torch.zeros(out_channels)
         
+        # TODO: 实现真实的卷积层，当前仅为简化版本
         # 执行卷积操作
         output = F.conv2d(input_tensor, weight, bias, stride=stride, padding=padding)
         
@@ -333,6 +336,7 @@ class TensorSGDOptimizer:
     DESCRIPTION = "随机梯度下降优化器"
 
     def optimize(self, parameters, learning_rate, momentum):
+        # TODO: 实现真实的SGD优化器算法
         # 这里简化处理，实际优化器需要维护状态
         # 我们只是简单地返回参数，表示优化器已创建
         return (parameters,)
@@ -360,6 +364,7 @@ class TensorAdamOptimizer:
     DESCRIPTION = "Adam优化器"
 
     def optimize(self, parameters, learning_rate, beta1, beta2, epsilon):
+        # TODO: 实现真实的Adam优化器算法
         # 这里简化处理，实际优化器需要维护状态
         # 我们只是简单地返回参数，表示优化器已创建
         return (parameters,)
@@ -385,6 +390,7 @@ class TensorForwardPass:
     DESCRIPTION = "执行前向传播"
 
     def forward(self, input_tensor, model_weights):
+        # TODO: 实现真实的前向传播计算
         # 简化处理：这里只是返回输入，实际应该执行模型的前向传播
         # 在完整的实现中，这里会应用模型权重到输入数据
         return (input_tensor,)
@@ -408,6 +414,7 @@ class TensorBackwardPass:
     DESCRIPTION = "执行反向传播"
 
     def backward(self, loss):
+        # TODO: 实现真实的反向传播计算
         # 简化处理：这里只是返回一个与loss形状相同的张量作为梯度
         # 实际应用中，这里会计算损失相对于模型参数的梯度
         gradients = torch.ones_like(loss)  # 占位符
@@ -434,6 +441,7 @@ class TensorUpdateWeights:
     DESCRIPTION = "更新模型权重"
 
     def update(self, parameters, gradients, learning_rate):
+        # TODO: 实现真实的权重更新算法
         # 简化的权重更新
         # 实际中，这会根据优化器类型和参数来更新权重
         updated_params = parameters - learning_rate * gradients
