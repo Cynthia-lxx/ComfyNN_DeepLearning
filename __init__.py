@@ -1,7 +1,7 @@
 # ComfyNN_DeepLearning 插件初始化文件
 # 遵循UNIX哲学，将不同功能模块化到独立的子文件夹中
 #
-# 开发规范：
+# 开发规范（重要，务必阅读每一条！）：
 # 1. 添加新功能时，请创建新的功能子目录并在其中放置节点代码
 # 2. 或者在现有子目录中修改或新建代码
 # 3. 所有节点必须在此文件中集中引用和注册
@@ -9,13 +9,9 @@
 # 5. 所有的功能性子分类都需要测试数据生成节点和example_workflow
 # 6. 所有节点的名字后面都需要有🐱
 # 7. 编写任何插件代码，都应该先阅读ComfyUI的源代码以及已经测试稳定的插件代码作为参考
+# 8. 每写一个功能，都在/READMEs/编写相应的详细说明，并更新主目录下的README.md和README_zh.md
+# 9. 当引用来自别处的代码时，在引用的开头和结尾都应该用注释声明引用来源并简短表达致谢
 
-"""
-2025/11/10
-经测试，启动时插件出现以下错误：
-Error importing ComputerVision nodes: cannot import name 'NODE_CLASS_MAPPINGS' from 'F:\\Dev\\ComfyNN_v0\\custom_nodes\\ComfyNN_DeepLearning-main.ComputerVision.image_augmentation' (F:\Dev\ComfyNN_v0\custom_nodes\ComfyNN_DeepLearning-main\ComputerVision\image_augmentation.py)
-TODO: 修复ComputerVision的节点定义格式
-"""
 import os
 import sys
 
@@ -31,6 +27,10 @@ modules = [
     "NLP_Pretrain",
     "ComputerVision"  # 新增计算机视觉模块
 ]
+
+# 添加当前目录到sys.path，确保可以正确导入模块
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
 
 # 添加模块路径到sys.path
 for module in modules:
@@ -308,13 +308,13 @@ try:
     
     # 导入NLP预训练模块 - 近似训练相关节点
     from .NLP_Pretrain.approximate_training import (
-        NegativeSamplingNLP,
-        HierarchicalSoftmaxNLP
+        NegativeSamplingNode,
+        HierarchicalSoftmaxNode
     )
     
     # 导入NLP预训练模块 - GloVe相关节点
     from .NLP_Pretrain.glove import (
-        GloVeModel
+        GloVeNode
     )
     
     # 导入NLP预训练模块 - FastText相关节点
@@ -342,11 +342,11 @@ try:
         "SubsamplingNLP": SubsamplingNLP,
         
         # 近似训练相关节点
-        "NegativeSamplingNLP": NegativeSamplingNLP,
-        "HierarchicalSoftmaxNLP": HierarchicalSoftmaxNLP,
+        "NegativeSamplingNode": NegativeSamplingNode,
+        "HierarchicalSoftmaxNode": HierarchicalSoftmaxNode,
         
         # GloVe相关节点
-        "GloVeModel": GloVeModel,
+        "GloVeNode": GloVeNode,
         
         # FastText相关节点
         "FastTextModel": FastTextModel,
@@ -367,11 +367,11 @@ try:
         "SubsamplingNLP": "Subsampling NLP 🐱",
         
         # 近似训练相关节点
-        "NegativeSamplingNLP": "Negative Sampling NLP 🐱",
-        "HierarchicalSoftmaxNLP": "Hierarchical Softmax NLP 🐱",
+        "NegativeSamplingNode": "Negative Sampling 🐱",
+        "HierarchicalSoftmaxNode": "Hierarchical Softmax 🐱",
         
         # GloVe相关节点
-        "GloVeModel": "GloVe Model 🐱",
+        "GloVeNode": "GloVe Embeddings 🐱",
         
         # FastText相关节点
         "FastTextModel": "FastText Model 🐱",
@@ -397,7 +397,8 @@ try:
     
     # 导入计算机视觉模块 - 微调相关节点
     from .ComputerVision.finetuning import (
-        FinetuningNode
+        FinetuningNode,
+        TransferLearningNode
     )
     
     # 导入计算机视觉模块 - 边界框相关节点
@@ -408,22 +409,29 @@ try:
     
     # 导入计算机视觉模块 - 锚框相关节点
     from .ComputerVision.anchor_boxes import (
-        AnchorBoxNode
+        AnchorBoxNode,
+        AnchorBoxMatcher
     )
     
     # 导入计算机视觉模块 - IoU相关节点
     from .ComputerVision.iou import (
-        IoUNode
+        IoUNode,
+        IoUThresholdFilter
     )
     
     # 导入计算机视觉模块 - 单发多框检测相关节点
     from .ComputerVision.single_shot_multibox import (
-        SingleShotMultiboxNode
+        SingleShotMultiboxNode,
+        SSDAnchorGenerator,
+        SSDDetectionPostProcessor
     )
     
     # 导入计算机视觉模块 - R-CNN系列相关节点
     from .ComputerVision.rcnn_series import (
-        RCNNModelNode
+        RCNNModelNode,
+        RegionProposalNetwork,
+        ROIPooling,
+        MaskHead
     )
     
     # 导入计算机视觉模块 - 语义分割相关节点
@@ -435,13 +443,13 @@ try:
     # 导入计算机视觉模块 - 转置卷积相关节点
     from .ComputerVision.transposed_convolution import (
         TransposedConv2DNode,
-        MultiScaleTransposedConvNode
+        BilinearUpsampleNode
     )
     
     # 导入计算机视觉模块 - 全卷积网络相关节点
     from .ComputerVision.fully_convolutional_network import (
         FCNNode,
-        EncoderDecoderNode
+        SegmentationHeadNode
     )
     
     # 导入计算机视觉模块 - 风格迁移相关节点
@@ -458,6 +466,7 @@ try:
         
         # 微调相关节点
         "FinetuningNode": FinetuningNode,
+        "TransferLearningNode": TransferLearningNode,
         
         # 边界框相关节点
         "BoundingBoxNode": BoundingBoxNode,
@@ -465,15 +474,22 @@ try:
         
         # 锚框相关节点
         "AnchorBoxNode": AnchorBoxNode,
+        "AnchorBoxMatcher": AnchorBoxMatcher,
         
         # IoU相关节点
         "IoUNode": IoUNode,
+        "IoUThresholdFilter": IoUThresholdFilter,
         
         # 单发多框检测相关节点
         "SingleShotMultiboxNode": SingleShotMultiboxNode,
+        "SSDAnchorGenerator": SSDAnchorGenerator,
+        "SSDDetectionPostProcessor": SSDDetectionPostProcessor,
         
         # R-CNN系列相关节点
         "RCNNModelNode": RCNNModelNode,
+        "RegionProposalNetwork": RegionProposalNetwork,
+        "ROIPooling": ROIPooling,
+        "MaskHead": MaskHead,
         
         # 语义分割相关节点
         "SemanticSegmentationNode": SemanticSegmentationNode,
@@ -481,11 +497,11 @@ try:
         
         # 转置卷积相关节点
         "TransposedConv2DNode": TransposedConv2DNode,
-        "MultiScaleTransposedConvNode": MultiScaleTransposedConvNode,
+        "BilinearUpsampleNode": BilinearUpsampleNode,
         
         # 全卷积网络相关节点
         "FCNNode": FCNNode,
-        "EncoderDecoderNode": EncoderDecoderNode,
+        "SegmentationHeadNode": SegmentationHeadNode,
         
         # 风格迁移相关节点
         "StyleTransferNode": StyleTransferNode,
@@ -499,6 +515,7 @@ try:
         
         # 微调相关节点
         "FinetuningNode": "Finetuning 🐱",
+        "TransferLearningNode": "Transfer Learning 🐱",
         
         # 边界框相关节点
         "BoundingBoxNode": "Bounding Box 🐱",
@@ -506,27 +523,34 @@ try:
         
         # 锚框相关节点
         "AnchorBoxNode": "Anchor Box 🐱",
+        "AnchorBoxMatcher": "Anchor Box Matcher 🐱",
         
         # IoU相关节点
         "IoUNode": "IoU 🐱",
+        "IoUThresholdFilter": "IoU Threshold Filter 🐱",
         
         # 单发多框检测相关节点
         "SingleShotMultiboxNode": "Single Shot Multibox 🐱",
+        "SSDAnchorGenerator": "SSD Anchor Generator 🐱",
+        "SSDDetectionPostProcessor": "SSD Detection Post Processor 🐱",
         
         # R-CNN系列相关节点
         "RCNNModelNode": "R-CNN Model 🐱",
+        "RegionProposalNetwork": "Region Proposal Network 🐱",
+        "ROIPooling": "ROI Pooling 🐱",
+        "MaskHead": "Mask Head 🐱",
         
         # 语义分割相关节点
         "SemanticSegmentationNode": "Semantic Segmentation 🐱",
         "InstanceSegmentationNode": "Instance Segmentation 🐱",
         
         # 转置卷积相关节点
-        "TransposedConv2DNode": "Transposed Conv 2D 🐱",
-        "MultiScaleTransposedConvNode": "Multi-Scale Transposed Conv 🐱",
+        "TransposedConv2DNode": "Transposed Conv2D 🐱",
+        "BilinearUpsampleNode": "Bilinear Upsample 🐱",
         
         # 全卷积网络相关节点
         "FCNNode": "Fully Convolutional Network 🐱",
-        "EncoderDecoderNode": "Encoder-Decoder Network 🐱",
+        "SegmentationHeadNode": "Segmentation Head 🐱",
         
         # 风格迁移相关节点
         "StyleTransferNode": "Neural Style Transfer 🐱",

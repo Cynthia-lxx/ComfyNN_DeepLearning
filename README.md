@@ -1,50 +1,62 @@
+[中文](README_zh.md)
+
 # ComfyNN_DeepLearning
 
-ComfyNN_DeepLearning 是一个模块化的深度学习插件集合，专为 ComfyUI 设计。该插件遵循 UNIX 哲法，将不同功能划分为独立的子模块，便于维护和扩展。
+ComfyNN_DeepLearning is a modular deep learning plugin suite designed for ComfyUI. Following the UNIX philosophy, this plugin divides different functionalities into independent submodules for easier maintenance and extension.
 
-## 模块结构
+## Features
 
-- **DataTypes**: 数据类型转换和张量创建功能
-  - Creation: 张量创建相关节点
-  - DataTypes: 数据类型转换节点
+This plugin does not depend on any other plugins and is not included in ComfyUI Manager. Currently, it does not require any models.
 
-- **DLBasic**: 基础张量操作
-  - 基本数学运算（加减乘除、幂运算等）
-  - 张量变形操作（转置、重塑、拼接等）
-  - 激活函数（ReLU、Sigmoid、Tanh等）
+## Module Structure
 
-- **DLCompute**: 深度学习计算相关节点
-  - 数据处理（数据加载、归一化、增强等）
-  - 模型层（线性层、卷积层、激活层等）
-  - 损失函数（MSE、交叉熵等）
-  - 优化器（SGD、Adam等）
-  - 训练相关（前向传播、反向传播、权重更新等）
+- **DataTypes**: Data type conversion and tensor creation functionality
+  - See [DataTypes README](READMEs/DataTypes.md) for details
 
-- **Visualize**: 数据可视化功能
-  - 张量到图像的可视化
-  - 热力图生成
-  - 形状信息可视化
-  - 折线图和统计信息可视化
+- **DLBasic**: Basic tensor operations
+  - See [DLBasic README](READMEs/DLBasic.md) for details
 
-## 特点
+- **DLCompute**: Deep learning computation related nodes
+  - See [DLCompute README](READMEs/DLCompute.md) for details
 
-1. **模块化设计**: 每个功能模块独立存放，便于维护和扩展
-2. **易于扩展**: 可以轻松添加新功能模块而不影响现有功能
-3. **遵循UNIX哲学**: 做一件事并做好（Do One Thing and Do It Well）
-4. **兼容性**: 与ComfyUI原生节点完全兼容
+- **Visualize**: Data visualization functionality
+  - See [Visualize README](READMEs/Visualize.md) for details
 
-## 安装
+- **NLP_Pretrain**: Natural language processing pre-training related nodes
+  - See [NLP_Pretrain README](READMEs/NLP_Pretrain.md) for details
 
-将此插件文件夹复制到 ComfyUI 的 `custom_nodes` 目录下即可。
+- **ComputerVision**: Computer vision related nodes
+  - See [ComputerVision README](READMEs/ComputerVision.md) for details
 
-## 使用
+## Examples
 
-安装后重启 ComfyUI，所有节点将自动出现在节点列表中，按模块分类组织。
+Each module contains example workflows that demonstrate the usage of the nodes in that category. Look for the `example_workflow.json` files in each subdirectory.
 
-## 开发
+## Installation
 
-每个模块都是独立的，可以在对应的子目录中进行开发和修改，不会影响其他模块。
+Clone this repository to your ComfyUI `custom_nodes` directory:
 
-## 许可证
+```
+cd ComfyUI/custom_nodes
+git clone https://github.com/Cynthia-lxx/ComfyNN_DeepLearning.git
+```
 
-[待定]
+After installation, restart ComfyUI to load the plugin.
+
+## Usage
+
+After installation and restarting ComfyUI, all nodes will automatically appear in the node list, organized by module category.
+
+## Development
+
+Each module is independent and can be developed and modified in its corresponding subdirectory without affecting other modules.
+
+Each module follows the principle of "Do One Thing and Do It Well" and maintains high cohesion and low coupling.
+
+## GitHub Repository
+
+For issues, suggestions, or contributions, please visit our GitHub repository: [https://github.com/Cynthia-lxx/ComfyNN_DeepLearning](https://github.com/Cynthia-lxx/ComfyNN_DeepLearning)
+
+## License
+
+[To be determined]

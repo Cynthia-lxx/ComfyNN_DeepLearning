@@ -232,18 +232,86 @@ class MultiScaleTransposedConvNode:
         
         return (combined_output,)
 
+class BilinearUpsampleNode:
+    """Bilinear Upsampling using Transposed Convolution node based on d2l-zh implementation"""
+    
     @classmethod
-    def IS_CHANGED(cls, **kwargs):
-        return False
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "input_tensor": ("TENSOR",),
+                "upscale_factor": ("INT", {"default": 2, "min": 1, "max": 10}),
+            },
+            "optional": {
+                "align_corners": ("BOOLEAN", {"default": False}),
+            }
+        }
 
+    RETURN_TYPES = ("TENSOR",)
+    RETURN_NAMES = ("output_tensor",)
+    FUNCTION = "bilinear_upsample"
+    CATEGORY = "ComfyNN/ComputerVision/TransposedConvolution"
+    DESCRIPTION = "Bilinear upsampling using transposed convolution"
 
-# Node导出映射
+    def bilinear_upsample(self, input_tensor, upscale_factor, align_corners=False):
+        # Ensure input is a tensor
+        if not isinstance(input_tensor, torch.Tensor):
+            raise TypeError("Input must be a torch.Tensor")
+        
+        # Get number of channels
+        if input_tensor.dim() == 4:
+            channels = input_tensor.shape[1]
+        else:
+            raise ValueError("Input tensor must be 4D with shape [B, C, H, W]")
+        
+        # Create bilinear kernel
+        kernel = self._bilinear_kernel(channels, channels, 2 * upscale_factor)
+        
+        # Create transposed convolution layer with bilinear initialization
+        transposed_conv = nn.ConvTranspose2d(
+            in_channels=channels,
+            out_channels=channels,
+            kernel_size=2 * upscale_factor,
+            stride=upscale_factor,
+            padding=upscale_factor // 2,
+            groups=channels,  # Each channel is processed separately
+            bias=False
+        )
+        
+        # Initialize with bilinear kernel
+        transposed_conv.weight.data.copy_(kernel)
+        
+        # Apply transposed convolution
+        output = transposed_conv(input_tensor)
+        
+        return (output,)
+
+    def _bilinear_kernel(self, in_channels, out_channels, kernel_size):
+        """Generate bilinear interpolation kernel"""
+        factor = (kernel_size + 1) // 2
+        if kernel_size % 2 == 1:
+            center = factor - 1
+        else:
+            center = factor - 0.5
+            
+        og = torch.arange(kernel_size).reshape(-1, 1), torch.arange(kernel_size).reshape(1, -1)
+        filt = (1 - torch.abs(og[0] - center) / factor) * (1 - torch.abs(og[1] - center) / factor)
+        
+        weight = torch.zeros((in_channels, out_channels, kernel_size, kernel_size))
+        for i in range(in_channels):
+            for j in range(out_channels):
+                if i == j:
+                    weight[i, j, :, :] = filt
+                    
+        return weight
+
+# Node mappings
 NODE_CLASS_MAPPINGS = {
     "TransposedConv2DNode": TransposedConv2DNode,
-    "MultiScaleTransposedConvNode": MultiScaleTransposedConvNode
+    "BilinearUpsampleNode": BilinearUpsampleNode,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "TransposedConv2DNode": "Transposed Conv 2D 🐱",
-    "MultiScaleTransposedConvNode": "Multi-Scale Transposed Conv 🐱"
+    "TransposedConv2DNode": "Transposed Conv2D 🐱",
+    "BilinearUpsampleNode": "Bilinear Upsample 🐱",
 }

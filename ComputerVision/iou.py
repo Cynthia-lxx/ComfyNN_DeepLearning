@@ -2,7 +2,7 @@
 import torch
 import numpy as np
 
-class IoUCalculator:
+class IoUNode:
     """IoU计算器节点"""
     
     @classmethod
@@ -273,3 +273,14 @@ class IoUThresholdFilter:
         iou = inter_area / torch.clamp(union_area, min=1e-8)
         
         return iou
+
+# Node mappings
+NODE_CLASS_MAPPINGS = {
+    "IoUNode": IoUNode,
+    "IoUThresholdFilter": IoUThresholdFilter,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "IoUNode": "IoU 🐱",
+    "IoUThresholdFilter": "IoU Threshold Filter 🐱",
+}

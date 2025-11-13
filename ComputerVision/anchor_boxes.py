@@ -2,7 +2,7 @@
 import torch
 import numpy as np
 
-class AnchorBoxGenerator:
+class AnchorBoxNode:
     """锚框生成节点"""
     
     @classmethod
@@ -193,3 +193,14 @@ class AnchorBoxMatcher:
                         iou_matrix[i, j] = inter_area / union_area
         
         return iou_matrix
+
+# Node mappings
+NODE_CLASS_MAPPINGS = {
+    "AnchorBoxNode": AnchorBoxNode,
+    "AnchorBoxMatcher": AnchorBoxMatcher,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "AnchorBoxNode": "Anchor Box 🐱",
+    "AnchorBoxMatcher": "Anchor Box Matcher 🐱",
+}

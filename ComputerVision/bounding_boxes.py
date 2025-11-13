@@ -2,7 +2,7 @@
 import torch
 import numpy as np
 
-class BoundingBoxGenerator:
+class BoundingBoxNode:
     """边界框生成节点"""
     
     @classmethod
@@ -77,7 +77,7 @@ class BoundingBoxGenerator:
         return (bbox_tensor, bbox_info)
 
 
-class BoundingBoxProcessor:
+class BoundingBoxMatchingNode:
     """边界框处理节点"""
     
     @classmethod
@@ -152,3 +152,14 @@ class BoundingBoxProcessor:
         info += f"Processed boxes shape: {processed_bboxes.shape}"
         
         return (processed_bboxes, info)
+
+# Node mappings
+NODE_CLASS_MAPPINGS = {
+    "BoundingBoxNode": BoundingBoxNode,
+    "BoundingBoxMatchingNode": BoundingBoxMatchingNode,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "BoundingBoxNode": "Bounding Box 🐱",
+    "BoundingBoxMatchingNode": "Bounding Box Matching 🐱",
+}

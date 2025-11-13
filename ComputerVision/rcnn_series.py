@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-class RCNNModel:
+class RCNNModelNode:
     """R-CNN模型节点"""
     
     @classmethod
@@ -253,3 +253,18 @@ class MaskHead:
         mask_info += f"Binary threshold: {binary_threshold}"
         
         return (instance_masks, mask_info)
+
+# Node mappings
+NODE_CLASS_MAPPINGS = {
+    "RCNNModelNode": RCNNModelNode,
+    "RegionProposalNetwork": RegionProposalNetwork,
+    "ROIPooling": ROIPooling,
+    "MaskHead": MaskHead,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "RCNNModelNode": "R-CNN Model 🐱",
+    "RegionProposalNetwork": "Region Proposal Network 🐱",
+    "ROIPooling": "ROI Pooling 🐱",
+    "MaskHead": "Mask Head 🐱",
+}

@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-class SSDModel:
+class SingleShotMultiboxNode:
     """单发多框检测器节点"""
     
     @classmethod
@@ -302,3 +302,16 @@ class SSDDetectionPostProcessor:
         iou = inter_area / torch.clamp(union_area, min=1e-8)
         
         return iou
+
+# Node mappings
+NODE_CLASS_MAPPINGS = {
+    "SingleShotMultiboxNode": SingleShotMultiboxNode,
+    "SSDAnchorGenerator": SSDAnchorGenerator,
+    "SSDDetectionPostProcessor": SSDDetectionPostProcessor,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "SingleShotMultiboxNode": "Single Shot Multibox 🐱",
+    "SSDAnchorGenerator": "SSD Anchor Generator 🐱",
+    "SSDDetectionPostProcessor": "SSD Detection Post Processor 🐱",
+}

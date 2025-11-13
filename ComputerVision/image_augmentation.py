@@ -1,4 +1,7 @@
 # ComfyNN ComputerVision Image Augmentation Nodes
+# Based on d2l-zh implementation (https://github.com/d2l-ai/d2l-zh)
+# Thank you d2l-ai team for the excellent educational resource
+
 import torch
 import torch.nn.functional as F
 import numpy as np
@@ -6,10 +9,9 @@ import random
 import math
 from PIL import Image, ImageEnhance, ImageOps
 from torchvision import transforms
-from ..DLBasic.nodes import TensorDataType
 
-class ImageAugmentation:
-    """图像增广节点"""
+class ImageAugmentationNode:
+    """图像增广节点，基于d2l-zh实现"""
     
     @classmethod
     def INPUT_TYPES(s):
@@ -45,7 +47,7 @@ class ImageAugmentation:
     RETURN_NAMES = ("augmented_images",)
     FUNCTION = "augment"
     CATEGORY = "ComfyNN/ComputerVision/ImageAugmentation"
-    DESCRIPTION = "对图像批次进行增广处理"
+    DESCRIPTION = "对图像批次进行增广处理，基于d2l-zh实现"
 
     def augment(self, image_batch, augmentation_type, probability=0.5, rotation_range=30, 
                 crop_size=224, noise_intensity=0.1, brightness_factor=0.2, contrast_factor=0.2,
@@ -160,3 +162,112 @@ class ImageAugmentation:
             augmented_images[i] = augmented_image
             
         return (augmented_images,)
+
+
+class BatchImageAugmentationNode:
+    """批次图像增广节点，基于d2l-zh实现"""
+    
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "image_batch": ("IMAGE",),
+            },
+            "optional": {
+                "horizontal_flip_prob": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "vertical_flip_prob": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "rotation_prob": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "rotation_range": ("INT", {"default": 30, "min": 0, "max": 180}),
+                "brightness_prob": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "brightness_factor": ("FLOAT", {"default": 0.2, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "color_jitter_prob": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "contrast_factor": ("FLOAT", {"default": 0.2, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "saturation_factor": ("FLOAT", {"default": 0.2, "min": 0.0, "max": 1.0, "step": 0.01}),
+                "hue_factor": ("FLOAT", {"default": 0.1, "min": 0.0, "max": 0.5, "step": 0.01}),
+            }
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("augmented_images",)
+    FUNCTION = "augment_batch"
+    CATEGORY = "ComfyNN/ComputerVision/ImageAugmentation"
+    DESCRIPTION = "对图像批次进行多种增广处理，基于d2l-zh实现"
+
+    def augment_batch(self, image_batch, horizontal_flip_prob=0.0, vertical_flip_prob=0.0, 
+                      rotation_prob=0.0, rotation_range=30, brightness_prob=0.0, brightness_factor=0.2,
+                      color_jitter_prob=0.0, contrast_factor=0.2, saturation_factor=0.2, hue_factor=0.1):
+        # 确保输入是torch.Tensor
+        if not isinstance(image_batch, torch.Tensor):
+            raise TypeError("输入必须是torch.Tensor类型")
+        
+        # 获取批次大小和图像尺寸
+        batch_size = image_batch.shape[0]
+        height, width = image_batch.shape[1:3]
+        
+        # 创建输出张量
+        augmented_images = image_batch.clone()
+        
+        # 对批次中的每张图像进行增广
+        for i in range(batch_size):
+            # 获取单张图像
+            image = augmented_images[i]  # [H, W, C]
+            
+            # 转换为PIL图像进行处理
+            pil_image = Image.fromarray((image.cpu().numpy() * 255).astype(np.uint8))
+            
+            # 水平翻转
+            if horizontal_flip_prob > 0 and random.random() < horizontal_flip_prob:
+                pil_image = ImageOps.mirror(pil_image)
+                
+            # 垂直翻转
+            if vertical_flip_prob > 0 and random.random() < vertical_flip_prob:
+                pil_image = ImageOps.flip(pil_image)
+                
+            # 旋转
+            if rotation_prob > 0 and random.random() < rotation_prob:
+                angle = random.uniform(-rotation_range, rotation_range)
+                pil_image = pil_image.rotate(angle, expand=False, fillcolor=(0, 0, 0))
+                
+            # 亮度调整
+            if brightness_prob > 0 and random.random() < brightness_prob:
+                brightness = random.uniform(max(0, 1 - brightness_factor), 1 + brightness_factor)
+                enhancer = ImageEnhance.Brightness(pil_image)
+                pil_image = enhancer.enhance(brightness)
+                
+            # 颜色抖动
+            if color_jitter_prob > 0 and random.random() < color_jitter_prob:
+                # 对比度调整
+                contrast = random.uniform(max(0, 1 - contrast_factor), 1 + contrast_factor)
+                enhancer = ImageEnhance.Contrast(pil_image)
+                pil_image = enhancer.enhance(contrast)
+                
+                # 饱和度调整
+                saturation = random.uniform(max(0, 1 - saturation_factor), 1 + saturation_factor)
+                enhancer = ImageEnhance.Color(pil_image)
+                pil_image = enhancer.enhance(saturation)
+                
+                # 色调调整
+                if abs(hue_factor) > 1e-6:
+                    hue = random.uniform(-hue_factor, hue_factor)
+                    hsv_image = pil_image.convert('HSV')
+                    hsv_array = np.array(hsv_image)
+                    hsv_array[:, :, 0] = (hsv_array[:, :, 0].astype(np.float32) + hue * 255) % 255
+                    hsv_image = Image.fromarray(hsv_array, 'HSV')
+                    pil_image = hsv_image.convert('RGB')
+            
+            # 转换回tensor并保存
+            augmented_image = torch.from_numpy(np.array(pil_image)).float() / 255.0
+            augmented_images[i] = augmented_image
+            
+        return (augmented_images,)
+
+# Node mappings
+NODE_CLASS_MAPPINGS = {
+    "ImageAugmentationNode": ImageAugmentationNode,
+    "BatchImageAugmentationNode": BatchImageAugmentationNode,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "ImageAugmentationNode": "Image Augmentation 🐱",
+    "BatchImageAugmentationNode": "Batch Image Augmentation 🐱",
+}
