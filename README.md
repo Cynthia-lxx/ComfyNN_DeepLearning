@@ -1,62 +1,53 @@
 [中文](README_zh.md)
 
-# ComfyNN_DeepLearning
+# ComfyNN_DeepLearning Plugin
 
-ComfyNN_DeepLearning is a modular deep learning plugin suite designed for ComfyUI. Following the UNIX philosophy, this plugin divides different functionalities into independent submodules for easier maintenance and extension.
+A deep learning plugin for ComfyUI based on [d2l-zh (Dive into Deep Learning)](https://zh.d2l.ai/) implementations
 
-## Features
+## Module Overview
 
-This plugin does not depend on any other plugins and is not included in ComfyUI Manager. Currently, it does not require any models.
+### DLBasic - Deep Learning Basics
+Basic tensor operations and activation functions.
 
-## Module Structure
+### ComputerVision - Computer Vision
+Implementations based on d2l-zh computer vision chapters, including image augmentation, fine-tuning, and more.
 
-- **DataTypes**: Data type conversion and tensor creation functionality
-  - See [DataTypes README](READMEs/DataTypes.md) for details
+### DataTypes - Data Types
+Data type definitions for deep learning.
 
-- **DLBasic**: Basic tensor operations
-  - See [DLBasic README](READMEs/DLBasic.md) for details
+### NLP_Pretrain - Natural Language Processing Pretraining
+Implementations based on d2l-zh NLP pretraining chapters, including word embeddings, approximate training, and more.
 
-- **DLCompute**: Deep learning computation related nodes
-  - See [DLCompute README](READMEs/DLCompute.md) for details
+### Visualize - Visualization
+Tools for visualizing data and models.
 
-- **Visualize**: Data visualization functionality
-  - See [Visualize README](READMEs/Visualize.md) for details
+### RNNs - Recurrent Neural Networks
+Implementations based on d2l-zh recurrent neural network chapters, including basic RNNs, GRUs, and LSTMs.
 
-- **NLP_Pretrain**: Natural language processing pre-training related nodes
-  - See [NLP_Pretrain README](READMEs/NLP_Pretrain.md) for details
+## Development Guidelines
 
-- **ComputerVision**: Computer vision related nodes
-  - See [ComputerVision README](READMEs/ComputerVision.md) for details
+1. All node class names must start with "ComfyNN"
+2. All node display names must end with " 🐱"
+3. Each module must be registered in the root __init__.py
+4. Each module needs to provide NODE_CLASS_MAPPINGS and NODE_DISPLAY_NAME_MAPPINGS
+5. Important: Each module's __init__.py file must export NODE_CLASS_MAPPINGS and NODE_DISPLAY_NAME_MAPPINGS
 
-## Examples
+## Usage Instructions
 
-Each module contains example workflows that demonstrate the usage of the nodes in that category. Look for the `example_workflow.json` files in each subdirectory.
+Place the plugin folder in ComfyUI's custom_nodes directory to use it.
 
-## Installation
+See example workflows for each module to understand how to use the nodes:
+- [DataTypes/example_workflow.json](DataTypes/example_workflow.json)
+- [DLBasic/example_workflow.json](DLBasic/example_workflow.json)
+- [DLCompute/example_workflow.json](DLCompute/example_workflow.json)
+- [ComputerVision/example_workflow.json](ComputerVision/example_workflow.json)
+- [NLP_Pretrain/example_workflow.json](NLP_Pretrain/example_workflow.json)
+- [RNNs/example_workflow.json](RNNs/example_workflow.json)
 
-Clone this repository to your ComfyUI `custom_nodes` directory:
+## License and Credits
 
-```
-cd ComfyUI/custom_nodes
-git clone https://github.com/Cynthia-lxx/ComfyNN_DeepLearning.git
-```
+This project is developed and maintained by Cynthia-lxx and maomaowjz_.
+It is inspired by the excellent educational resource ["Dive into Deep Learning" (《动手学深度学习》)](https://zh.d2l.ai/).
+Some code has been adapted or modified from the [d2l repository](https://github.com/d2l-ai/d2l-zh).
 
-After installation, restart ComfyUI to load the plugin.
-
-## Usage
-
-After installation and restarting ComfyUI, all nodes will automatically appear in the node list, organized by module category.
-
-## Development
-
-Each module is independent and can be developed and modified in its corresponding subdirectory without affecting other modules.
-
-Each module follows the principle of "Do One Thing and Do It Well" and maintains high cohesion and low coupling.
-
-## GitHub Repository
-
-For issues, suggestions, or contributions, please visit our GitHub repository: [https://github.com/Cynthia-lxx/ComfyNN_DeepLearning](https://github.com/Cynthia-lxx/ComfyNN_DeepLearning)
-
-## License
-
-[To be determined]
+The project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

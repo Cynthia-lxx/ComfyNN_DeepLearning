@@ -1,62 +1,51 @@
-[English](README.md)
+# ComfyNN_DeepLearning 插件
 
-# ComfyNN_DeepLearning
+基于 [d2l-zh (动手学深度学习)](https://zh.d2l.ai/) 实现的 ComfyUI 深度学习插件
 
-ComfyNN_DeepLearning 是一个模块化的深度学习插件集合，专为 ComfyUI 设计。该插件遵循 UNIX 哲学，将不同功能划分为独立的子模块，便于维护和扩展。
+## 模块介绍
 
-## 功能特点
+### DLBasic - 深度学习基础
+基础的张量操作和激活函数节点。
 
-此插件不依赖任何其他插件，也不被 ComfyUI Manager 收录。目前不需要任何模型。
+### ComputerVision - 计算机视觉
+基于d2l-zh计算机视觉章节的实现，包括图像增强、微调等技术。
 
-## 模块结构
+### DataTypes - 数据类型
+用于深度学习的数据类型定义。
 
-- **DataTypes**: 数据类型转换和张量创建功能
-  - 详见 [DataTypes README](READMEs/DataTypes.md)
+### NLP_Pretrain - 自然语言处理预训练
+基于d2l-zh自然语言处理预训练章节的实现，包括词嵌入、近似训练等技术。
 
-- **DLBasic**: 基础张量操作
-  - 详见 [DLBasic README](READMEs/DLBasic.md)
+### Visualize - 可视化
+数据和模型的可视化工具。
 
-- **DLCompute**: 深度学习计算相关节点
-  - 详见 [DLCompute README](READMEs/DLCompute.md)
+### RNNs - 循环神经网络
+基于d2l-zh循环神经网络章节的实现，包括基础RNN、GRU和LSTM。
 
-- **Visualize**: 数据可视化功能
-  - 详见 [Visualize README](READMEs/Visualize.md)
+## 开发规范
 
-- **NLP_Pretrain**: 自然语言处理预训练相关节点
-  - 详见 [NLP_Pretrain README](READMEs/NLP_Pretrain.md)
+1. 所有节点类名必须以"ComfyNN"开头
+2. 所有节点显示名称必须以" 🐱"结尾
+3. 每个模块必须在根目录的__init__.py中注册
+4. 每个模块需要提供NODE_CLASS_MAPPINGS和NODE_DISPLAY_NAME_MAPPINGS
+5. 重要：所有模块的__init__.py文件必须导出NODE_CLASS_MAPPINGS和NODE_DISPLAY_NAME_MAPPINGS
 
-- **ComputerVision**: 计算机视觉相关节点
-  - 详见 [ComputerVision README](READMEs/ComputerVision.md)
+## 使用说明
 
-## 示例
+将插件文件夹放入ComfyUI的custom_nodes目录中即可使用。
 
-每个模块都包含示例工作流，演示该类别节点的用法。请在每个子目录中查找 `example_workflow.json` 文件。
+查看各模块的示例工作流以了解如何使用节点：
+- [DataTypes/example_workflow.json](DataTypes/example_workflow.json)
+- [DLBasic/example_workflow.json](DLBasic/example_workflow.json)
+- [DLCompute/example_workflow.json](DLCompute/example_workflow.json)
+- [ComputerVision/example_workflow.json](ComputerVision/example_workflow.json)
+- [NLP_Pretrain/example_workflow.json](NLP_Pretrain/example_workflow.json)
+- [RNNs/example_workflow.json](RNNs/example_workflow.json)
 
-## 安装
+## 许可证和致谢
 
-将此仓库克隆到您的 ComfyUI `custom_nodes` 目录中：
+本项目由 Cynthia-lxx 和 maomaowjz_ 策划和开发。
+灵感来源于优秀的教育资源[《动手学深度学习》](https://zh.d2l.ai/)。
+部分代码复用或改装自[d2l仓库](https://github.com/d2l-ai/d2l-zh)。
 
-```
-cd ComfyUI/custom_nodes
-git clone https://github.com/Cynthia-lxx/ComfyNN_DeepLearning.git
-```
-
-安装完成后，重启 ComfyUI 以加载插件。
-
-## 使用
-
-安装并重启 ComfyUI 后，所有节点将自动出现在节点列表中，按模块分类组织。
-
-## 开发
-
-每个模块都是独立的，可以在对应的子目录中进行开发和修改，不会影响其他模块。
-
-每个模块都遵循"做一件事并做好"的原则，保持高内聚、低耦合。
-
-## GitHub 仓库
-
-如有问题、建议或贡献，请访问我们的 GitHub 仓库：[https://github.com/Cynthia-lxx/ComfyNN_DeepLearning](https://github.com/Cynthia-lxx/ComfyNN_DeepLearning)
-
-## 许可证
-
-[待定]
+项目采用 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
