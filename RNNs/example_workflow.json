@@ -1,0 +1,762 @@
+{
+  "last_node_id": 14,
+  "last_link_id": 16,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "ComfyNNRNNTestNode",
+      "pos": [
+        100,
+        300
+      ],
+      "size": {
+        "0": 315,
+        "1": 126
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "test_data",
+          "type": "TENSOR",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "data_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNTestNode"
+      },
+      "widgets_values": [
+        10,
+        32,
+        64,
+        "random"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "ComfyNNRNNNode",
+      "pos": [
+        500,
+        300
+      ],
+      "size": {
+        "0": 315,
+        "1": 198
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "rnn_model",
+          "type": "CUSTOM",
+          "links": [
+            2
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "rnn_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNNode"
+      },
+      "widgets_values": [
+        64,
+        128,
+        1,
+        "tanh",
+        0,
+        true
+      ]
+    },
+    {
+      "id": 3,
+      "type": "ComfyNNRNNModelNode",
+      "pos": [
+        900,
+        300
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "rnn_layer",
+          "type": "CUSTOM",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rnn_model",
+          "type": "CUSTOM",
+          "links": [
+            3
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "model_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNModelNode"
+      },
+      "widgets_values": [
+        1000
+      ]
+    },
+    {
+      "id": 4,
+      "type": "ComfyNNRNNForwardNode",
+      "pos": [
+        1300,
+        300
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "rnn_model",
+          "type": "CUSTOM",
+          "link": 3
+        },
+        {
+          "name": "input_sequence",
+          "type": "TENSOR",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "TENSOR",
+          "links": [
+            4
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "final_state",
+          "type": "CUSTOM",
+          "links": null,
+          "slot_index": 1
+        },
+        {
+          "name": "forward_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNForwardNode"
+      },
+      "widgets_values": [
+        "cpu"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "ComfyNNGRUNode",
+      "pos": [
+        500,
+        600
+      ],
+      "size": {
+        "0": 315,
+        "1": 178
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "gru_model",
+          "type": "CUSTOM",
+          "links": [
+            5
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "gru_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNGRUNode"
+      },
+      "widgets_values": [
+        64,
+        128,
+        1,
+        0,
+        true
+      ]
+    },
+    {
+      "id": 6,
+      "type": "ComfyNNRNNModelNode",
+      "pos": [
+        900,
+        600
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "rnn_layer",
+          "type": "CUSTOM",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rnn_model",
+          "type": "CUSTOM",
+          "links": [
+            6
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "model_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNModelNode"
+      },
+      "widgets_values": [
+        1000
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ComfyNNRNNForwardNode",
+      "pos": [
+        1300,
+        600
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "rnn_model",
+          "type": "CUSTOM",
+          "link": 6
+        },
+        {
+          "name": "input_sequence",
+          "type": "TENSOR",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "TENSOR",
+          "links": [
+            7
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "final_state",
+          "type": "CUSTOM",
+          "links": null,
+          "slot_index": 1
+        },
+        {
+          "name": "forward_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNForwardNode"
+      },
+      "widgets_values": [
+        "cpu"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "ComfyNNLSTMNode",
+      "pos": [
+        500,
+        900
+      ],
+      "size": {
+        "0": 315,
+        "1": 178
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "lstm_model",
+          "type": "CUSTOM",
+          "links": [
+            8
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "lstm_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNLSTMNode"
+      },
+      "widgets_values": [
+        64,
+        128,
+        1,
+        0,
+        true
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ComfyNNRNNModelNode",
+      "pos": [
+        900,
+        900
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "rnn_layer",
+          "type": "CUSTOM",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rnn_model",
+          "type": "CUSTOM",
+          "links": [
+            9
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "model_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNModelNode"
+      },
+      "widgets_values": [
+        1000
+      ]
+    },
+    {
+      "id": 10,
+      "type": "ComfyNNRNNForwardNode",
+      "pos": [
+        1300,
+        900
+      ],
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "rnn_model",
+          "type": "CUSTOM",
+          "link": 9
+        },
+        {
+          "name": "input_sequence",
+          "type": "TENSOR",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "type": "TENSOR",
+          "links": [
+            10
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "final_state",
+          "type": "CUSTOM",
+          "links": null,
+          "slot_index": 1
+        },
+        {
+          "name": "forward_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 2
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyNNRNNForwardNode"
+      },
+      "widgets_values": [
+        "cpu"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "Note",
+      "pos": [
+        100,
+        100
+      ],
+      "size": {
+        "0": 400,
+        "1": 150
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "text": ""
+      },
+      "widgets_values": [
+        "This workflow demonstrates the usage of RNN nodes:\n1. Generate test data with ComfyNNRNNTestNode\n2. Create RNN/GRU/LSTM layers\n3. Build complete models with ComfyNNRNNModelNode\n4. Run forward passes with ComfyNNRNNForwardNode\n\nEach type of RNN is demonstrated in parallel."
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 12,
+      "type": "TensorHeatmapVisualizer",
+      "pos": [
+        1700,
+        300
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "tensor",
+          "type": "TENSOR",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            13
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "visualization_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TensorHeatmapVisualizer"
+      },
+      "widgets_values": [
+        "plasma"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "TensorHeatmapVisualizer",
+      "pos": [
+        1700,
+        500
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "tensor",
+          "type": "TENSOR",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            14
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "visualization_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TensorHeatmapVisualizer"
+      },
+      "widgets_values": [
+        "plasma"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "TensorHeatmapVisualizer",
+      "pos": [
+        1700,
+        700
+      ],
+      "size": {
+        "0": 315,
+        "1": 58
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "tensor",
+          "type": "TENSOR",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            15
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "visualization_info",
+          "type": "STRING",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TensorHeatmapVisualizer"
+      },
+      "widgets_values": [
+        "plasma"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      1,
+      "TENSOR"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      0,
+      "CUSTOM"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "CUSTOM"
+    ],
+    [
+      4,
+      4,
+      0,
+      12,
+      0,
+      "TENSOR"
+    ],
+    [
+      5,
+      5,
+      0,
+      6,
+      0,
+      "CUSTOM"
+    ],
+    [
+      6,
+      6,
+      0,
+      7,
+      0,
+      "CUSTOM"
+    ],
+    [
+      7,
+      7,
+      0,
+      13,
+      0,
+      "TENSOR"
+    ],
+    [
+      8,
+      8,
+      0,
+      9,
+      0,
+      "CUSTOM"
+    ],
+    [
+      9,
+      9,
+      0,
+      10,
+      0,
+      "CUSTOM"
+    ],
+    [
+      10,
+      10,
+      0,
+      14,
+      0,
+      "TENSOR"
+    ],
+    [
+      11,
+      1,
+      0,
+      7,
+      1,
+      "TENSOR"
+    ],
+    [
+      12,
+      1,
+      0,
+      10,
+      1,
+      "TENSOR"
+    ],
+    [
+      13,
+      12,
+      0,
+      null,
+      null,
+      "IMAGE"
+    ],
+    [
+      14,
+      13,
+      0,
+      null,
+      null,
+      "IMAGE"
+    ],
+    [
+      15,
+      14,
+      0,
+      null,
+      null,
+      "IMAGE"
+    ],
+    [
+      16,
+      1,
+      0,
+      16,
+      1,
+      "TENSOR"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

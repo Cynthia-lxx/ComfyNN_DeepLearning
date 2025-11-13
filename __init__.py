@@ -1,4 +1,7 @@
-# ComfyNN_DeepLearning 插件初始化文件
+# ComfyUI NN Deep Learning Plugin
+# A plugin for deep learning nodes in ComfyUI
+# Based on d2l-zh (Dive into Deep Learning) implementations
+
 # 遵循UNIX哲学，将不同功能模块化到独立的子文件夹中
 #
 # 开发规范（重要，务必阅读每一条！）：
@@ -11,6 +14,15 @@
 # 7. 编写任何插件代码，都应该先阅读ComfyUI的源代码以及已经测试稳定的插件代码作为参考
 # 8. 每写一个功能，都在/READMEs/编写相应的详细说明，并更新主目录下的README.md和README_zh.md
 # 9. 当引用来自别处的代码时，在引用的开头和结尾都应该用注释声明引用来源并简短表达致谢
+
+"""
+2025/11/13
+
+测试RNNs/example_workflow结果：
+将两个foward pass接到热力图可视化节点后运行，在可视化节点报错'NoneType' object has no attribute 'dim'。
+已知可视化节点本身工作正常，可知问题出现在RNN节点中。
+TODO: 检查并修复RNNs。
+"""
 
 import os
 import sys
@@ -559,6 +571,39 @@ try:
     
 except ImportError as e:
     print(f"Error importing ComputerVision nodes: {e}")
+
+try:
+    # 导入RNN模块
+    from .RNNs import (
+        ComfyNNRNNNode,
+        ComfyNNGRUNode,
+        ComfyNNLSTMNode,
+        ComfyNNRNNModelNode,
+        ComfyNNRNNForwardNode,
+        ComfyNNRNNTestNode,
+    )
+    
+    # 更新节点映射
+    NODE_CLASS_MAPPINGS.update({
+        "ComfyNNRNNNode": ComfyNNRNNNode,
+        "ComfyNNGRUNode": ComfyNNGRUNode,
+        "ComfyNNLSTMNode": ComfyNNLSTMNode,
+        "ComfyNNRNNModelNode": ComfyNNRNNModelNode,
+        "ComfyNNRNNForwardNode": ComfyNNRNNForwardNode,
+        "ComfyNNRNNTestNode": ComfyNNRNNTestNode,
+    })
+    
+    NODE_DISPLAY_NAME_MAPPINGS.update({
+        "ComfyNNRNNNode": "RNN Layer 🐱",
+        "ComfyNNGRUNode": "GRU Layer 🐱",
+        "ComfyNNLSTMNode": "LSTM Layer 🐱",
+        "ComfyNNRNNModelNode": "RNN Model 🐱",
+        "ComfyNNRNNForwardNode": "RNN Forward Pass 🐱",
+        "ComfyNNRNNTestNode": "RNN Test Data 🐱",
+    })
+    
+except ImportError as e:
+    print(f"Error importing RNN nodes: {e}")
 
 # 定义要导出的类
 __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
