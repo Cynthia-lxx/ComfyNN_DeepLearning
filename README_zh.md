@@ -1,51 +1,57 @@
-# ComfyNN_DeepLearning 插件
+<div align="center">
+  <a href="README.md">English</a>
+  <br><br>
+  <img src="icon.png" alt="Icon" style="width: max(10vw, 200px);">
+  <h1>ComfyNN_DeepLearning</h1>
+  <p>一套将深度学习集成到 ComfyUI 中的自定义节点！</p>
+</div>
 
-基于 [d2l-zh (动手学深度学习)](https://zh.d2l.ai/) 实现的 ComfyUI 深度学习插件
+## 安装方式
 
-## 模块介绍
+将源代码文件夹直接复制到 `ComfyUI/custom_nodes/ComfyNN_DeepLearning` 目录下（确保此目录中可以找到[__init__.py](file://E:\Dev\ComfyNN_v0\app\__init__.py)和本 README 文件）。
+或者，如果您使用 Git，可以克隆此存储库。
 
-### DLBasic - 深度学习基础
-基础的张量操作和激活函数节点。
+## 工作流示例
 
-### ComputerVision - 计算机视觉
-基于d2l-zh计算机视觉章节的实现，包括图像增强、微调等技术。
+在每个子目录中都有一个 `example_workflow.json` 文件，展示了节点的基本用法。
 
-### DataTypes - 数据类型
-用于深度学习的数据类型定义。
+## 功能概述
+**数据类型**
+- 定义 `ComfyNN_DeepLearning.TensorDatatype.TENSOR` 张量数据类型
+- 从文件读取张量；保存或导出张量
+- 基本张量操作（重塑、计算等）
 
-### NLP_Pretrain - 自然语言处理预训练
-基于d2l-zh自然语言处理预训练章节的实现，包括词嵌入、近似训练等技术。
+**深度学习基础**
+- 基本张量操作和激活函数
 
-### Visualize - 可视化
-数据和模型的可视化工具。
+**深度学习计算**
+- 层：Conv2d、Linear 等
+- 优化器：SGD、Adam 等
+- 损失函数：CrossEntropyLoss、MSELoss 等
 
-### RNNs - 循环神经网络
-基于d2l-zh循环神经网络章节的实现，包括基础RNN、GRU和LSTM。
+**计算机视觉**
+- 基于 d2l-zh 计算机视觉章节的实现，包括图像增强、微调等
 
-## 开发规范
+**自然语言处理预训练**
+- NLP 模型：GloVe、BERT 等
 
-1. 所有节点类名必须以"ComfyNN"开头
-2. 所有节点显示名称必须以" 🐱"结尾
-3. 每个模块必须在根目录的__init__.py中注册
-4. 每个模块需要提供NODE_CLASS_MAPPINGS和NODE_DISPLAY_NAME_MAPPINGS
-5. 重要：所有模块的__init__.py文件必须导出NODE_CLASS_MAPPINGS和NODE_DISPLAY_NAME_MAPPINGS
+**可视化**
+- 将张量可视化为图像
+- 为张量数据生成热力图
+- 显示形状信息
+- 张量数据的统计可视化
 
-## 使用说明
-
-将插件文件夹放入ComfyUI的custom_nodes目录中即可使用。
-
-查看各模块的示例工作流以了解如何使用节点：
-- [DataTypes/example_workflow.json](DataTypes/example_workflow.json)
-- [DLBasic/example_workflow.json](DLBasic/example_workflow.json)
-- [DLCompute/example_workflow.json](DLCompute/example_workflow.json)
-- [ComputerVision/example_workflow.json](ComputerVision/example_workflow.json)
-- [NLP_Pretrain/example_workflow.json](NLP_Pretrain/example_workflow.json)
-- [RNNs/example_workflow.json](RNNs/example_workflow.json)
+**循环神经网络**
+- 基于 d2l-zh 循环神经网络章节的实现，包括基础 RNN、GRU 和 LSTM
 
 ## 许可证和致谢
 
-本项目由 Cynthia-lxx 和 maomaowjz_ 策划和开发。
-灵感来源于优秀的教育资源[《动手学深度学习》](https://zh.d2l.ai/)。
-部分代码复用或改装自[d2l仓库](https://github.com/d2l-ai/d2l-zh)。
+本项目由 Cynthia-lxx 和 maomaowjz_ 开发和维护。
+它受到优秀教育资源[《动手学深度学习》](https://zh.d2l.ai/)的启发。
+部分代码改编或修改自 [d2l 仓库](https://github.com/d2l-ai/d2l-zh)。
 
-项目采用 MIT 许可证，详见 [LICENSE](LICENSE) 文件。
+该项目根据 MIT 许可证授权。有关详细信息，请参阅 [LICENSE](LICENSE) 文件。
+
+## 反馈
+
+如果您遇到任何问题或有建议，请[提交问题](https://github.com/Cynthia-lxx/ComfyNN_DeepLearning/issues)或[发起拉取请求](https://github.com/Cynthia-lxx/ComfyNN_DeepLearning/pulls)。

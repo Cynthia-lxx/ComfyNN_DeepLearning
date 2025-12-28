@@ -1,48 +1,48 @@
-[中文](README_zh.md)
+<div align="center">
+  <a href="README_zh.md">中文</a>
+  <br><br>
+  <img src="icon.png" alt="Icon" style="width: max(10vw, 200px);">
+  <h1>ComfyNN_DeepLearning</h1>
+  <p>A set of custom nodes that integrates deeplearning to ComfyUI!</p>
+</div>
 
-# ComfyNN_DeepLearning Plugin
+## To Install
 
-A deep learning plugin for ComfyUI based on [d2l-zh (Dive into Deep Learning)](https://zh.d2l.ai/) implementations
+Directly copy the source code folder to `ComfyUI/custom_nodes/ComfyNN_DeepLearning` (make sure that the __init__.py and this README file can be found in this directory).  
+Or, if you are using Git, you can clone this repository.
 
-## Module Overview
+## Workflow Examples
 
-### DLBasic - Deep Learning Basics
-Basic tensor operations and activation functions.
+In each sub-directory there is a `example_workflow.json` which shows the basic usage of the nodes.
 
-### ComputerVision - Computer Vision
-Implementations based on d2l-zh computer vision chapters, including image augmentation, fine-tuning, and more.
+## Function overview
+**Data Types**
+- Defines the `ComfyNN_DeepLearning.TensorDatatype.TENSOR` data type for tensors.
+- Reads tensors from files; save or export tensors.
+- Basic tensor operations(reshape, calculation, etc).  
 
-### DataTypes - Data Types
-Data type definitions for deep learning.
+**Deep Learning Basic**
+- Basic tensor operations and activation functions.
 
-### NLP_Pretrain - Natural Language Processing Pretraining
-Implementations based on d2l-zh NLP pretraining chapters, including word embeddings, approximate training, and more.
+**Deep Learning Computation**
+- Layers: Conv2d, Linear, etc.
+- Optimizers: SGD, Adam, etc.
+- Loss functions: CrossEntropyLoss, MSELoss, etc.
 
-### Visualize - Visualization
-Tools for visualizing data and models.
+**Computer Vision**
+- Implementations based on d2l-zh computer vision chapters, including image augmentation, fine-tuning, and more.
 
-### RNNs - Recurrent Neural Networks
-Implementations based on d2l-zh recurrent neural network chapters, including basic RNNs, GRUs, and LSTMs.
+**NLP Pretrain**
+- NLP Models: GloVe, BERT, etc.
 
-## Development Guidelines
+**Visualize**
+- Tensor visualization as images
+- Heatmap generation for tensor data
+- Shape information display
+- Statistical visualization of tensor data
 
-1. All node class names must start with "ComfyNN"
-2. All node display names must end with " 🐱"
-3. Each module must be registered in the root __init__.py
-4. Each module needs to provide NODE_CLASS_MAPPINGS and NODE_DISPLAY_NAME_MAPPINGS
-5. Important: Each module's __init__.py file must export NODE_CLASS_MAPPINGS and NODE_DISPLAY_NAME_MAPPINGS
-
-## Usage Instructions
-
-Place the plugin folder in ComfyUI's custom_nodes directory to use it.
-
-See example workflows for each module to understand how to use the nodes:
-- [DataTypes/example_workflow.json](DataTypes/example_workflow.json)
-- [DLBasic/example_workflow.json](DLBasic/example_workflow.json)
-- [DLCompute/example_workflow.json](DLCompute/example_workflow.json)
-- [ComputerVision/example_workflow.json](ComputerVision/example_workflow.json)
-- [NLP_Pretrain/example_workflow.json](NLP_Pretrain/example_workflow.json)
-- [RNNs/example_workflow.json](RNNs/example_workflow.json)
+**RNNs**
+- Implementations based on d2l-zh recurrent neural network chapters, including basic RNns, GRUs, and LSTMs.
 
 ## License and Credits
 
@@ -51,3 +51,7 @@ It is inspired by the excellent educational resource ["Dive into Deep Learning" 
 Some code has been adapted or modified from the [d2l repository](https://github.com/d2l-ai/d2l-zh).
 
 The project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Send Feedback
+
+If you have encountered any problems or have suggestions, please [open an issue](https://github.com/Cynthia-lxx/ComfyNN_DeepLearning/issues) or [start a pull request](https://github.com/Cynthia-lxx/ComfyNN_DeepLearning/pulls).
